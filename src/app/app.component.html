@@ -4,36 +4,39 @@
     Welcome to {{ title }}!
   </h1>
   <h1>Form for Joining Classes</h1>
-<form>
+<form #classForm="ngForm">
+  <!-- checking the data -->
+  {{classForm.value | json}}
+  <!-- by using pipes -->
   <div class="form-group">
     <label>Name</label>
-    <input type="text" class="form-control">
+    <input type="text" class="form-control" ngModel name="name">
   </div>
     <div class="form-group">
     <label>Email</label>
-    <input type="email" class="form-control">
+    <input type="email" class="form-control" ngModel name="email">
   </div>
     <div class="form-group">
     <label>Phone</label>
-    <input class="form-control" type="tel">
+    <input class="form-control" type="tel" ngModel name="phone">
   </div>
   <div class="form-group">
-    <select class="custom-select">
+    <select class="custom-select" ngModel name="topicWanted">
       <option selected>I am not interested..</option>
-      <option *ngFor="let topic of topics">{{topic}}</option>
+      <option *ngFor="let topic of topics" >{{topic}}</option>
     </select>
   </div>
   <div class="form-group">
-    <input class="form-check-input" type="radio" name="TimePreference" value="Moning" checked >
+    <input class="form-check-input" type="radio" name="TimePreference" ngModel value="Moning" checked >
     <label class="form-check-label">Morning Batch</label>
   </div>
   <div class="form-group">
-    <input class="form-check-input" type="radio" name="TimePreference" value="Evening">
+    <input class="form-check-input" type="radio" name="TimePreference" ngModel value="Evening">
     <label class="form-check-label">Evening Batch</label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="checkbox">
-    <label class="form-check-label">I agree to the Privacy policy</label>
+    <input class="form-check-input" ngModel name="privacy" type="checkbox">
+    <label class="form-check-label" >I agree to the Privacy policy</label>
   </div>
   <button class="btn btn-primary">Submit</button>
 </form>
