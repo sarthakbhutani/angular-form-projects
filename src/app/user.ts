@@ -4,6 +4,7 @@ export class user {
         public email : string,
         public phone :number,
         public topicWanted : string,
-        public TimePreference : boolean
+        public TimePreference : string,
+        public privacy : boolean
     ){}
 }

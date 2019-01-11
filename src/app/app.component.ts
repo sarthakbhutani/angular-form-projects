@@ -9,5 +9,6 @@ import { user } from './user';
 export class AppComponent {
   title = 'tdf';
   topics = [ 'Angular','React','Node'];
-  public User = new user("Sarthak", "ahsbahb@as.com",98767899876,"Angular",true);
+  public User = new user("Sarthak", "ahsbahb@as.com",98767899876,"Angular","Morning",true);
+  public abcd = true;
 }
