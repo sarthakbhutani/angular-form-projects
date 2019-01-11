@@ -1,18 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center" class="container-fluid">
-  <h1>Form for Joining Classes</h1>
-<form #classForm="ngForm">
-  <!-- checking the data
-  {{classForm.value | json}}
-  <br> -->
-  <!-- by using pipes -->
-
-  <!-- checking the records already stored in Angular -->
-  <!-- <small>angular data</small> -->
-  <!-- {{User | json}}
-  <br> -->
-<!-- {{name.className}} -->
-<!-- {{name.untouched}} -->
+    <h1>Form for Joining Classes</h1>
+  <div *ngIf="!submitted; then formBlock; else submittedBlock"></div>
+  <ng-template #formBlock>
+<form #classForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+  <!-- IMPLEMENT ng-template || *ngIf="!submitted"-->
 <br>
   <div class="form-group">
     <label>Name</label>
@@ -37,11 +29,11 @@
     </div>
   </div>
   <div class="form-group">
-    <select class="custom-select" [class.is-invalid]="topic.invalid" #topic="ngModel" [(ngModel)]=User.topicWanted name="topicWanted" required>
-      <option selected >I am not interested..</option>
+    <select class="custom-select" (change)="ValidateTopic(topic.value)" (blur)="ValidateTopic(topic.value)" [class.is-invalid]="topic.invalid" #topic="ngModel" [(ngModel)]=User.topicWanted name="topicWanted" required>
+      <option selected value="default">I am not interested..</option>
       <option *ngFor="let topic of topics" >{{topic}}</option>
     </select>
-    <small class="text-danger" [class.d-none]="topic.valid || topic.untouched">Please choose a topic</small>
+    <small class="text-danger" [class.d-none]="!errorFlag">Please choose a topic</small>
   </div>
   <div class="form-group" >
     <input class="form-check-input" type="radio" name="TimePreference" [(ngModel)]=User.TimePreference value="Morning" >  
@@ -56,7 +48,12 @@
     <input class="form-check-input" [(ngModel)]=User.privacy name="privacy" type="checkbox">
     <label class="form-check-label" >I agree to the Privacy policy</label>
   </div>
-  <button class="btn btn-primary" (click)="formSubmit()">Submit</button>
+  <button class="btn btn-primary" [disabled]="classForm.invalid || errorFlag"(click)="formSubmit()">Submit</button>
 </form>
-
+</ng-template>
+<ng-template #submittedBlock>
+  <!-- *ngIf="submitted" -->
+  <small class="text-success">Form submitted</small>
+</ng-template>
+</div>
 
