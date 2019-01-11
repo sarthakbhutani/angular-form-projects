@@ -11,4 +11,9 @@ export class AppComponent {
   topics = [ 'Angular','React','Node'];
   public User = new user("Sarthak", "ahsbahb@as.com",98767899876,"Angular","Morning",true);
   public abcd = true;
+
+  public formSubmit(){
+    window.alert("Form submitted with data, name : "+this.User.name);
+    console.log("submitted");
+  }
 }
