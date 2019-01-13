@@ -1,0 +1,69 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation" class="active"><a href="#">Home</a></li>
+      <li role="presentation"><a href="#">Profile</a></li>
+      <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+  </div>
+<div style="text-align:center" class="container-fluid">
+    <h1>Form for Joining Classes</h1>
+  <!-- <div class="navbar"> -->
+    
+  <!-- </div> -->
+  <div *ngIf="!submitted; then formBlock; else submittedBlock"></div>
+  <ng-template #formBlock>
+<form #classForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+  <!-- IMPLEMENT ng-template || *ngIf="!submitted"-->
+<br>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control" [class.is-invalid]="name.invalid && name.touched" [(ngModel)]=User.name name="name" #name="ngModel" required>
+    <small class="text-danger" [class.d-none]="name.valid">Name is invalid</small>
+  </div>
+    <div class="form-group">
+    <label>Email</label>
+    <input type="email" required pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" #email="ngModel" class="form-control" [(ngModel)]=User.email name="email">
+    <div *ngIf="email.errors && (email.touched || email.invalid)">
+      <small class="text-danger" *ngIf="email.errors.pattern">Email must be valid</small>
+      <small class="text-danger" *ngIf="email.errors.required">Email required</small>
+    </div>
+  </div>
+    <div class="form-group">
+    <label>Phone</label>
+    <input class="form-control" type="tel" required pattern="^\d{10}$" #tel="ngModel"  [class.is-invalid]="tel.invalid && tel.touched" [(ngModel)]=User.phone name="phone">
+    <!-- <small class="text-danger" [class .d-none]="tel.valid">Phone number is required and must be 10 digits.</small> -->
+    <div *ngIf="tel.errors && (tel.touched || tel.invalid)">
+      <small class="text-danger" *ngIf="tel.errors.required">Phone number is required </small>
+      <small class="text-danger" *ngIf="tel.errors.pattern">Phone number must be of 10 digits </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <select class="custom-select" (change)="ValidateTopic(topic.value)" (blur)="ValidateTopic(topic.value)" [class.is-invalid]="topic.invalid" #topic="ngModel" [(ngModel)]=User.topicWanted name="topicWanted" required>
+      <option selected value="default">I am not interested..</option>
+      <option *ngFor="let topic of topics" >{{topic}}</option>
+    </select>
+    <small class="text-danger" [class.d-none]="!errorFlag">Please choose a topic</small>
+  </div>
+  <div class="form-group" >
+    <input class="form-check-input" type="radio" name="TimePreference" [(ngModel)]=User.TimePreference value="Morning" >  
+      <!-- checked -->
+    <label class="form-check-label">Morning Batch</label>
+  </div>
+  <div class="form-group">
+    <input class="form-check-input" type="radio" name="TimePreference" [(ngModel)]=User.TimePreference value="Evening">
+    <label class="form-check-label">Evening Batch</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" [(ngModel)]=User.privacy name="privacy" type="checkbox">
+    <label class="form-check-label" >I agree to the Privacy policy</label>
+  </div>
+  <button class="btn btn-primary" [disabled]="classForm.invalid || errorFlag"(click)="formSubmit()">Submit</button>
+</form>
+</ng-template>
+<ng-template #submittedBlock>
+  <!-- *ngIf="submitted" -->
+  <small class="text-success">Form submitted</small>
+</ng-template>
+</div>
+
